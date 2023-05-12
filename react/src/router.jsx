@@ -14,88 +14,91 @@ import Catalog from "./views/Catalog/Catalog.jsx";
 import Wishlist from "./views/Wishlist.jsx";
 import UserView from "./views/UserView.jsx";
 import ErrorPage from "./views/ErrorPage.jsx";
-
+import CustomBottle from "./views/CustomBottle/CustomBottle.jsx";
 
 const RouteAdmin = ({ children }) => {
-    const { user_types_id } = useStateContext();
-    console.log("user_types_id in RouteAdmin:", user_types_id);
+  const { user_types_id } = useStateContext();
+  console.log("user_types_id in RouteAdmin:", user_types_id);
 
-    if (user_types_id == 1) {
-        return children;
-      } else {
-        return <ErrorPage errorStatus={666} />;
-      }
-    };
+  if (user_types_id == 1) {
+    return children;
+  } else {
+    return <ErrorPage errorStatus={666} />;
+  }
+};
 
 const router = createBrowserRouter([
-    {
+  {
+    path: "/",
+    element: <DefaultLayout />,
+    children: [
+      {
+        // redirection si aucune adresse n'est entrée
         path: "/",
-        element: <DefaultLayout />,
-        children: [
-            {
-                // redirection si aucune adresse n'est entrée
-                path: "/",
-                element: <Navigate to="/cellar" />,
-            },
-            {
-                path: "/cellar",
-                element: <Cellar />,
-            },
-            {
-                path: "/catalog",
-                element: <Catalog />,
-            },
-            {
-                path: "/wishlist",
-                element: <Wishlist />,
-            },
-            {
-                path: "/product/:id",
-                element: <ProductView />,
-            },
-            {
-                path: "/users/:id",
-                element: <UserView />,
-            },
-            {
-                path: "/admin",
-                element: (
-                  <RouteAdmin>
-                    <Admin />
-                  </RouteAdmin>
-                ),
-              },
-              
-        ],
-    },
-    {
+        element: <Navigate to="/cellar" />,
+      },
+      {
+        path: "/cellar",
+        element: <Cellar />,
+      },
+      {
+        path: "/catalog",
+        element: <Catalog />,
+      },
+      {
+        path: "/customBottle",
+        element: <CustomBottle />,
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist />,
+      },
+      {
+        path: "/product/:id",
+        element: <ProductView />,
+      },
+      {
+        path: "/users/:id",
+        element: <UserView />,
+      },
+      {
+        path: "/admin",
+        element: (
+          <RouteAdmin>
+            <Admin />
+          </RouteAdmin>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <GuestLayout />,
+    children: [
+      {
         path: "/",
-        element: <GuestLayout />,
-        children: [
-            {
-                path: "/",
-                element: <Navigate to="/login" />,
-            },
-            {
-                path: "/login",
-                element: <Login />,
-            },
-            {
-                path: "/signup",
-                element: <Signup />,
-            },
-        ],
-    },
-    {
+        element: <Navigate to="/login" />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <ErrorLayout />,
+    children: [
+      {
         path: "*",
-        element: <ErrorLayout />,
-        children: [
-            {
-                path: "*",
-                element: <ErrorPage errorStatus={404} />,
-            },
-        ],
-    },
+        element: <ErrorPage errorStatus={404} />,
+      },
+    ],
+  },
 ]);
 
 export default router;
