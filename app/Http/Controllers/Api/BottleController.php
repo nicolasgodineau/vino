@@ -74,31 +74,13 @@ class BottleController extends Controller
         return new BottleResource($bottle);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Bottle  $bottle
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Bottle $bottle)
+    public function scan(Request $request)
     {
-        //non utilise
-        $data = $request->validated();
-        $bottle->update($data);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Bottle  $bottle
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Bottle $bottle)
-    {
-        //non utilise
-        $bottle->delete();
-
-        return response("", 204);
+        $bottle = Bottle::query()->where('code_cup', 'LIKE', '%'.$request->code.'%')->first();
+        if($bottle){
+            return new BottleResource($bottle);
+        }else {
+            return false;
+        }
     }
 }

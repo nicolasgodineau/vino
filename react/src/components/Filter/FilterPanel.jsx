@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useLocation } from "react";
 import axiosClient from "../../axios-client";
 import OptionPage from "./OptionPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -61,15 +61,17 @@ const FilterPanel = ({ filters, setFilters, onClearFilters }) => {
         [CATEGORIES.country.internalName]: {},
     });
 
+    let source = location.pathname;
+
     // les options de filtres sont récupérés
     const fetchFilteredCountries = async () => {
-        const response = await axiosClient.post("/countries", {
+        const response = await axiosClient.post(`/countries${ source }`, {
             filters,
         });
         setFilteredCountries(response.data);
     };
     const fetchFilteredTypes = async () => {
-        const response = await axiosClient.post("/types", {
+        const response = await axiosClient.post(`/types${ source }`, {
             filters,
         });
         setFilteredTypes(response.data);
@@ -220,7 +222,7 @@ const FilterPanel = ({ filters, setFilters, onClearFilters }) => {
         <div
             className={`${
                 searchBarOpen ? "pt-2" : "pt-6"
-            } z-20 w-full fixed transition-all duration-200 ease-in-out overflow-hidden max-h-[100px] bg-white shadow-shadow-tiny pt-6 pb-0`}
+            } z-40 w-full fixed transition-all duration-200 ease-in-out overflow-hidden max-h-[100px] bg-white shadow-shadow-tiny pt-6 pb-0`}
         >
             {/* Rangée des catégories de filtre */}
             <div className="overflow-x-auto scrollbar-hide left-0 top-full flex gap-4 px-2 mb-4 transition-all duration-300 ease-in-out transform translate-y-0 opacity-100 visible">
