@@ -14,7 +14,6 @@ import Catalog from "./views/Catalog/Catalog.jsx";
 import Wishlist from "./views/Wishlist.jsx";
 import UserView from "./views/UserView.jsx";
 import ErrorPage from "./views/ErrorPage.jsx";
-import CustomBottle from "./views/CustomBottle/CustomBottle.jsx";
 
 const RouteAdmin = ({ children }) => {
   const { user_types_id } = useStateContext();
@@ -44,10 +43,6 @@ const router = createBrowserRouter([
       {
         path: "/catalog",
         element: <Catalog />,
-      },
-      {
-        path: "/customBottle",
-        element: <CustomBottle />,
       },
       {
         path: "/wishlist",
